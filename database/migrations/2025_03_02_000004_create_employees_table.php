@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('address');
             $table->string('phone_number', 15)->nullable();
             $table->string('npwp_number', 20)->nullable();
+            $table->string('img', 255)->nullable();
             
             $table->unsignedInteger('religion_id');
             $table->unsignedInteger('work_unit_id')->nullable();

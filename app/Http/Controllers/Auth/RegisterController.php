@@ -41,12 +41,6 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    public function showRegistrationForm()
-    {
-        $employees = Employee::whereNull('user_id')->get(); // Pegawai yang belum punya akun
-        return view('auth.register', compact('employees'));
-    }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -55,10 +49,24 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $is_valid_employee = true;
+
+        if ($data['employee_id'] != null) {
+            $is_valid_employee = Employee::where('employee_id', $data['employee_id'])->exists();
+        }
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'employee_id' => [
+                'required',
+                function ($attribute, $value, $fail) use ($is_valid_employee) {
+                    if (!$is_valid_employee) {
+                        $fail('The selected employee ID is invalid.');
+                    }
+                },
+            ],
         ]);
     }
 
