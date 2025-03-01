@@ -61,6 +61,18 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="employee_id"  class="col-md-4 col-form-label text-md-end">Employee ID</label>
+                            <div class="col-md-6">
+                                <select name="employee_id" id="employee_id" class="form-control" required>
+                                    <option value="">-- Pilih Pegawai --</option>
+                                    @foreach ($employees as $employee)
+                                    <option value="{{ $employee->employee_id }}">{{ $employee->name }} - {{ $employee->email }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
