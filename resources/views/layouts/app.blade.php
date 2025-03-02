@@ -13,13 +13,12 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- DataTables CSS (Pastikan di <head>) -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap5.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
@@ -57,9 +56,9 @@
                                 </li>
                             @endif
                         @else
-                            @if (Auth::user()->role === 'superadmin')
+                            @if (Auth::user()->role === 'admin')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">Dashboard Superadmin</a>
+                                    <a class="nav-link" href="">Dashboard Admin</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="">Manajemen Pengguna</a>
@@ -101,16 +100,13 @@
             @yield('content')
         </main>
     </div>
-
-    <!-- jQuery (Pastikan ini sebelum DataTables) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap JS -->
-
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @yield('scripts')
 </body>
 </html>

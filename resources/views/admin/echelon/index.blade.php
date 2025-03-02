@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Halo SuperAdmin</h1>
+    <h1>Halo Admin ini Echelon</h1>
 </body>
 </html>

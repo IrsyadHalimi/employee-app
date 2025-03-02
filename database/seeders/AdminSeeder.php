@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 
-class SuperAdminSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,12 +17,12 @@ class SuperAdminSeeder extends Seeder
      */
     public function run()
     {
-        if (!User::where('email', 'superadmin@gmail.com')->exists()) {
+        if (!User::where('email', 'admin@gmail.com')->exists()) {
             User::create([
-                'name' => 'Super Admin',
-                'email' => 'superadmin@gmail.com',
-                'password' => Hash::make('Superadmin1*'),
-                'role' => 'superadmin',
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('Admin1*'),
+                'role' => 'admin',
             ]);
         }
     }

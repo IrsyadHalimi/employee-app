@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Halo SuperAdmin ini Religion</h1>
+    <h1>Halo Admin ini Religion</h1>
 </body>
 </html>

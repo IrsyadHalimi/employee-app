@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Rank extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['rank_name'];
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class, 'rank_id');
+    }
 }
