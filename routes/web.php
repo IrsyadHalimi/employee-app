@@ -23,6 +23,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('superadmin')->middleware(['auth', 'superadmin'])->group(function () {
     Route::get('/employees', 'App\Http\Controllers\SuperAdmin\EmployeeController@index')->name("superadmin.employee.index");
+    Route::get('/employees/data', 'App\Http\Controllers\SuperAdmin\EmployeeController@getData')->name('superadmin.employee.data');
+    Route::post('/employees/store', 'App\Http\Controllers\SuperAdmin\EmployeeController@store')->name('superadmin.employee.store');
 
     Route::get('/ranks', 'App\Http\Controllers\SuperAdmin\RankController@index')->name("superadmin.rank.index");
     
