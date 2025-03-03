@@ -88,13 +88,13 @@
                 { data: 'address', name: 'address' },
                 { data: 'birth_date', name: 'birth_date' },
                 { data: 'gender', name: 'gender' },
-                { data: 'rank.rank_name', name: 'rank.rank_name' },
-                { data: 'echelon.echelon_name', name: 'echelon.echelon_name' },
-                { data: 'position.position_description', name: 'position.position_description' },
-                { data: 'workPlace.work_place_name', name: 'workPlace.work_place_name' },
+                { data: 'rank.rank_name', name: 'rank.rank_name' }, // Pastikan 'rank' sesuai dengan nama relasi di model
+                { data: 'echelon.echelon_name', name: 'echelon.echelon_name' }, // Pastikan 'echelon' sesuai dengan nama relasi di model
+                { data: 'position.position_description', name: 'position.position_description' }, // Pastikan 'position' sesuai dengan nama relasi di model
+                { data: 'workPlace.work_place_name', name: 'workPlace.work_place_name' }, // Pastikan 'workPlace' sesuai dengan nama relasi di model
                 { data: 'religion.religion_name', name: 'religion.religion_name' },
                 { data: 'action', name: 'action' },
-                { data: 'work_unit.work_unit_name', name: 'work_unit.work_unit_name' },
+                { data: 'workUnit.work_unit_name', name: 'workUnit.work_unit_name' }, // Pastikan 'workUnit' sesuai dengan nama relasi di model
                 { data: 'phone_number', name: 'phone_number' },
                 { data: 'npwp_number', name: 'npwp_number' },
             ]
@@ -150,40 +150,90 @@
                 }
             });
         });
-    });
 
-    document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.editButton').forEach(button => {
-        button.addEventListener('click', function() {
-            const data = {
-                employee_id: atob(this.dataset.employee_id),
-                name: atob(this.dataset.name),
-                birth_place: atob(this.dataset.birth_place),
-                address: atob(this.dataset.address),
-                birth_date: atob(this.dataset.birth_date),
-                gender: atob(this.dataset.gender),
-                echelon_id: atob(this.dataset.echelon_id),
-                position_id: atob(this.dataset.position_id),
-                work_place_id: atob(this.dataset.work_place_id),
-                religion_id: atob(this.dataset.religion_id),
-                work_unit_id: atob(this.dataset.work_unit_id),
-                phone_number: atob(this.dataset.phone_number),
-                npwp_number: atob(this.dataset.npwp_number),
-            };
+        $(document).on('click', '.editButton', function() {
+            var employeeId = atob($(this).data('employee_id'));
+            var name = atob($(this).data('name'));
+            var birthPlace = atob($(this).data('birth_place'));
+            var address = atob($(this).data('address'));
+            var birthDate = atob($(this).data('birth_date'));
+            var gender = atob($(this).data('gender'));
+            var echelonId = atob($(this).data('echelon_id'));
+            var positionId = atob($(this).data('position_id'));
+            var workPlaceId = atob($(this).data('work_place_id'));
+            var religionId = atob($(this).data('religion_id'));
+            var workUnitId = atob($(this).data('work_unit_id'));
+            var phoneNumber = atob($(this).data('phone_number'));
+            var npwpNumber = atob($(this).data('npwp_number'));
 
-            editEmployee(data);
+            $('#employeeEditModal #employeeId').val(employeeId);
+            $('#employeeEditModal #newEmployeeId').val(employeeId);
+            $('#employeeEditModal #name').val(name);
+            $('#employeeEditModal #birthPlace').val(birthPlace);
+            $('#employeeEditModal #address').val(address);
+            $('#employeeEditModal #birthDate').val(birthDate);
+            if (gender === 'male') {
+                $('#employeeEditModal #male').prop('checked', true);
+            } else if (gender === 'female') {
+                $('#employeeEditModal #female').prop('checked', true);
+            }
+            $('#employeeEditModal #echelonId').val(echelonId);
+            $('#employeeEditModal #positionId').val(positionId);
+            $('#employeeEditModal #workPlaceId').val(workPlaceId);
+            $('#employeeEditModal #religionId').val(religionId);
+            $('#employeeEditModal #workUnitId').val(workUnitId);
+            $('#employeeEditModal #phoneNumber').val(phoneNumber);
+            $('#employeeEditModal #npwpNumber').val(npwpNumber);
+
+            $('#employeeEditModal').modal('show');
+        });
+
+        $('#employeeEditForm').submit(function (e) {
+            e.preventDefault();
+
+            var formData = $(this).serialize();
+            var submitButton = $('#submitEditEmployee');
+
+            table.processing(true);
+            submitButton.prop('disabled', true).html('Menyimpan...');
+
+            $.ajax({
+                url: "{{ route('admin.employee.update') }}",
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            $('#employeeCreateModal').modal('hide');
+                            $('#employeeCreateForm')[0].reset();
+                            table.ajax.reload();
+                        })
+                    }
+                },
+                error: function (xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorMessage = '';
+                    $.each(errors, function (key, value) {
+                        errorMessage += value + '\n';
+                    });
+                    Swal.fire({
+                        title: 'Error!',
+                        text: errorMessage,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                },
+                complete: function () {
+                    table.processing(false);
+                    submitButton.prop('disabled', false).html('Simpan');
+                }
+            });
         });
     });
-});
-
-function editEmployee(data) {
-    // Logika untuk menampilkan data di dalam modal
-    console.log(data);
-    // ...
-    // Contoh untuk memasukkan data ke dalam modal.
-    document.getElementById('editEmployeeId').value = data.employee_id;
-    document.getElementById('editName').value = data.name;
-    // ... dan seterusnya
-}
 </script>
 @endsection

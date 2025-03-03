@@ -9,9 +9,10 @@
                 <div class="modal-body">
                     <form id="employeeEditForm">
                         @csrf
+                        <input type="text" name="employeeId" id="employeeId" hidden>
                         <div class="mb-3">
-                            <label for="employeeId" class="form-label">NIP</label>
-                            <input type="text" class="form-control" id="employeeId" name="employeeId" >
+                            <label for="newEmployeeId" class="form-label">NIP</label>
+                            <input type="text" class="form-control" id="newEmployeeId" name="newEmployeeId" >
                         </div>
 
                         <div class="mb-3">
@@ -106,7 +107,7 @@
                             <input type="number" class="form-control" id="npwpNumber" name="npwpNumber" >
                         </div>
 
-                        <button type="submit" id="submitCreateEmployee" class="btn btn-primary">Simpan</button>
+                        <button type="submit" id="submitEditEmployee" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>
             </div>

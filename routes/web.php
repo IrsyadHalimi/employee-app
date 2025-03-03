@@ -25,6 +25,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/employees', 'App\Http\Controllers\Admin\EmployeeController@index')->name("admin.employee.index");
     Route::get('/employees/data', 'App\Http\Controllers\Admin\EmployeeController@getData')->name('admin.employee.data');
     Route::post('/employees/store', 'App\Http\Controllers\Admin\EmployeeController@store')->name('admin.employee.store');
+    Route::post('/employees/update', 'App\Http\Controllers\Admin\EmployeeController@update')->name('admin.employee.update');
 
     Route::get('/ranks', 'App\Http\Controllers\Admin\RankController@index')->name("admin.rank.index");
     

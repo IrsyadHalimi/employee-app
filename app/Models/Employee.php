@@ -9,6 +9,14 @@ class Employee extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'employee_id';
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
+    public $timestamp = false;
+
     protected $fillable = [
         'employee_id',    
         'name',

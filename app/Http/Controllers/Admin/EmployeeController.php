@@ -12,6 +12,7 @@ use App\Models\WorkPlace;
 use App\Models\Religion;
 use App\Models\WorkUnit;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -126,6 +127,55 @@ class EmployeeController extends Controller
             'success' => true,
             'message' => 'Pegawai berhasil ditambahkan!',
             'data' => $employee
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $rules = [
+            'name' => 'required|string|max:50',
+            'birthPlace' => 'required|string|max:50',
+            'address' => 'nullable|string|max:255',
+            'birthDate' => 'required|date',
+            'gender' => 'required|in:male,female',
+            'religionId' => 'required',
+            'rankId' => 'nullable|exists:ranks,id',
+            'echelonId' => 'nullable|exists:echelons,id',
+            'positionId' => 'nullable|exists:positions,id',
+            'workPlaceId' => 'nullable|exists:work_places,id',
+            'religionId' => 'required|exists:religions,id',
+            'workUnitId' => 'nullable|exists:work_units,id',
+            'phoneNumber' => 'nullable|string|max:15',
+            'npwpNumber' => 'nullable|string|max:20',
+        ];  
+
+        if ($request->employeeId !== $request->newEmployeeId) {
+            $rules['newEmployeeId'] = 'required|unique:employees,employee_id|max:11';
+        }
+
+        $validatedData = $request->validate($rules);
+
+        DB::transaction(function () use ($request, $validatedData) {
+            $employee = Employee::findOrFail($request->employeeId);
+
+            $data = $validatedData;
+            
+            if ($request->employeeId !== $request->newEmployeeId) {
+                $data['employee_id'] = $request->newEmployeeId;
+            } else {
+                $data = collect($data)->except('newEmployeeId')->toArray();
+            }
+
+            $employee->fill($data);
+            $employee->save();
+        });
+
+        $updatedEmployee = Employee::find($request->newEmployeeId);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pegawai berhasil ditambahkan!',
+            'data' => $updatedEmployee
         ]);
     }
 }
