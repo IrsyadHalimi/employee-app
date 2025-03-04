@@ -25,8 +25,8 @@ class EchelonController extends Controller
             $echelonId = base64_encode($row->id);
             $echelonName = base64_encode($row->echelon_name);
 
-            $editButton = '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#echelonEditModal" data-echelon_id="'. $echelonId .'" data-echelon_name="'. $echelonName .'"  class="editButton"><i class="fa-solid fa-file-pen"></i></a>';
-            $deleteButton = '<a href="javascript:void(0)" onClick="deleteEchelon(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
+            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#echelonEditModal" data-echelon_id="'. $echelonId .'" data-echelon_name="'. $echelonName .'"  class="editButton"><i class="fa-solid fa-file-pen"></i></a>';
+            $deleteButton = '<a href="javascript:void(0)" title="Hapus" onClick="deleteEchelon(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
             return $editButton . $deleteButton;
         })
         ->rawColumns(['action'])

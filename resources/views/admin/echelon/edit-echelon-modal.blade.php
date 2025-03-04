@@ -11,7 +11,7 @@
                         @csrf
                         <input type="text" name="echelonId" id="echelonId" hidden>
                         <div class="mb-3">
-                            <label for="newEchelonName" class="form-label">Nama Golongan</label>
+                            <label for="newEchelonName" class="form-label">Nama Eselon</label>
                             <input type="text" class="form-control" id="newEchelonName" name="newEchelonName" >
                         </div>
                         <button type="submit" id="submitEditEchelon" class="btn btn-primary">Simpan</button>

@@ -14,6 +14,7 @@ use App\Models\Religion;
 use App\Models\WorkUnit;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -71,16 +72,17 @@ class EmployeeController extends Controller
                 'work_unit_id' => base64_encode($row->work_unit_id),
                 'phone_number' => base64_encode($row->phone_number),
                 'npwp_number' => base64_encode($row->npwp_number),
+                'img' => base64_encode($row->img),
             ];
 
-            $editButton = '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#employeeEditModal" class="editButton"';
+            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#employeeEditModal" class="editButton"';
 
             foreach ($encodedData as $key => $value) {
                 $editButton .= ' data-' . $key . '="' . $value . '"';
             }
 
             $editButton .= '><i class="fa-solid fa-file-pen"></i></a>';
-            $deleteButton = '<a href="javascript:void(0)" onClick="deleteEmployee(\'' . $row->employee_id . '\')"><i class="fa-solid fa-trash"></i></a>';
+            $deleteButton = '<a href="javascript:void(0)" title="Hapus" onClick="deleteEmployee(\'' . $row->employee_id . '\')"><i class="fa-solid fa-trash"></i></a>';
             return $editButton . $deleteButton;
         })
         ->rawColumns(['action'])
@@ -105,8 +107,17 @@ class EmployeeController extends Controller
             'workUnitId' => 'nullable|exists:work_units,id',
             'phoneNumber' => 'nullable|string|max:15',
             'npwpNumber' => 'nullable|string|max:20',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
+        $imgName = null;
+        
+        if ($request->hasFile('img')) {
+            $img = $request->file('img');
+            $imgName = time() . '.' . $img->getClientOriginalExtension();
+            $img->storeAs('public/profile', $imgName);
+        }
+        
         $employee = Employee::create([
             'employee_id' => $request->employeeId,
             'name' => $request->name,
@@ -122,6 +133,7 @@ class EmployeeController extends Controller
             'work_unit_id' => $request->workUnitId ? $request->workUnitId : null,
             'phone_number' => $request->phoneNumber ? $request->phoneNumber : null,
             'npwp_number' => $request->npwpNumber ? $request->npwpNumber : null,
+            'img' => $imgName,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

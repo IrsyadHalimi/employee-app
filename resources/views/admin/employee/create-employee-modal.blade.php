@@ -77,6 +77,7 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label for="religionId" class="form-label">Agama</label>
                             <select class="form-select" id="religionId" name="religionId" >
@@ -86,6 +87,17 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="workPlaceId" class="form-label">Tempat Tugas</label>
+                            <select class="form-select" id="workPlaceId" name="workPlaceId" >
+                                <option value="">Pilih</option>
+                                @foreach($workPlaces as $workPlace)
+                                    <option value="{{ $workPlace->id }}">{{ $workPlace->work_place_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label for="workUnitId" class="form-label">Unit Kerja</label>
                             <select class="form-select" id="workUnitId" name="workUnitId" >
@@ -104,6 +116,11 @@
                         <div class="mb-3">
                             <label for="npwpNumber" class="form-label">NPWP</label>
                             <input type="number" class="form-control" id="npwpNumber" name="npwpNumber" >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="npwpNumber" class="form-label">Upload Foto</label>
+                            <input type="file" class="form-control" name="img" id="img" accept="image/*">
                         </div>
 
                         <button type="submit" id="submitCreateEmployee" class="btn btn-primary">Simpan</button>

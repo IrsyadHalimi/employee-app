@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">{{ __('Pegawai') }}</div>
                 <div class="card-body">
                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#employeeCreateModal">
                         Tambah Pegawai
@@ -40,6 +40,7 @@
                                     <th>Unit Kerja</th>
                                     <th>No. HP</th>
                                     <th>NPWP</th>
+                                    <th>Foto</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,6 +100,18 @@
                 { data: 'workUnit.work_unit_name', name: 'workUnit.work_unit_name' },
                 { data: 'phone_number', name: 'phone_number' },
                 { data: 'npwp_number', name: 'npwp_number' },
+                { 
+                    data: 'img', 
+                    name: 'img',
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, full, meta) {
+                        if (data) {
+                            return `<img src="/storage/profile/${data}" class="img-thumbnail" width="100" height="100">`;
+                        }
+                        return `<img src="/storage/profile/default.png" class="img-thumbnail" width="100" height="100">`;
+                    }
+                },
             ]
         });
 
@@ -109,7 +122,7 @@
         $('#employeeCreateForm').submit(function (e) {
             e.preventDefault();
 
-            var formData = $(this).serialize();
+            var formData = new FormData(this);
             var submitButton = $('#submitCreateEmployee');
 
             table.processing(true);
@@ -119,6 +132,8 @@
                 url: "{{ route('admin.employee.store') }}",
                 type: "POST",
                 data: formData,
+                processData: false,
+                contentType: false,
                 success: function (response) {
                     if (response.success) {
                         Swal.fire({

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -47,6 +47,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::delete('/positions/delete', 'App\Http\Controllers\Admin\PositionController@destroy')->name('admin.position.destroy');
 
     Route::get('/work-places', 'App\Http\Controllers\Admin\WorkPlaceController@index')->name("admin.work-place.index");
+    Route::get('/work-places/data', 'App\Http\Controllers\Admin\WorkPlaceController@getData')->name('admin.work-place.data');
+    Route::post('/work-places/store', 'App\Http\Controllers\Admin\WorkPlaceController@store')->name('admin.work-place.store');
+    Route::post('/work-places/update', 'App\Http\Controllers\Admin\WorkPlaceController@update')->name('admin.work-place.update');
+    Route::delete('/work-places/delete', 'App\Http\Controllers\Admin\WorkPlaceController@destroy')->name('admin.work-place.destroy');
 
     Route::get('/religions', 'App\Http\Controllers\Admin\ReligionController@index')->name("admin.religion.index");
     Route::get('/religions/data', 'App\Http\Controllers\Admin\ReligionController@getData')->name('admin.religion.data');
@@ -55,6 +59,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::delete('/religions/delete', 'App\Http\Controllers\Admin\ReligionController@destroy')->name('admin.religion.destroy');
 
     Route::get('/work-units', 'App\Http\Controllers\Admin\WorkUnitController@index')->name("admin.work-unit.index");
+    Route::get('/work-units/data', 'App\Http\Controllers\Admin\WorkUnitController@getData')->name('admin.work-unit.data');
+    Route::post('/work-units/store', 'App\Http\Controllers\Admin\WorkUnitController@store')->name('admin.work-unit.store');
+    Route::post('/work-units/update', 'App\Http\Controllers\Admin\WorkUnitController@update')->name('admin.work-unit.update');
+    Route::delete('/work-units/delete', 'App\Http\Controllers\Admin\WorkUnitController@destroy')->name('admin.work-unit.destroy');
 });
 
 Route::prefix('employee')->middleware(['auth', 'employee'])->group(function () {

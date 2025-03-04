@@ -3,7 +3,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="religionModalLabel">Edit Eselon</h5>
+                    <h5 class="modal-title" id="religionModalLabel">Edit Agama</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -11,7 +11,7 @@
                         @csrf
                         <input type="text" name="religionId" id="religionId" hidden>
                         <div class="mb-3">
-                            <label for="newReligionName" class="form-label">Nama Golongan</label>
+                            <label for="newReligionName" class="form-label">Nama Agama</label>
                             <input type="text" class="form-control" id="newReligionName" name="newReligionName" >
                         </div>
                         <button type="submit" id="submitEditReligion" class="btn btn-primary">Simpan</button>

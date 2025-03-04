@@ -31,7 +31,8 @@ class Employee extends Model
         'religion_id',
         'work_unit_id',
         'phone_number',
-        'npwp_number'
+        'npwp_number',
+        'img'
     ];
 
     public function user() 
