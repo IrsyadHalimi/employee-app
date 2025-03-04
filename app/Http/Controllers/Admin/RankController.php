@@ -88,7 +88,7 @@ class RankController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Data pegawai berhasil dihapus!',
+            'message' => 'Data golongan berhasil dihapus!',
             'data' => $deletedRank
         ]);
     }

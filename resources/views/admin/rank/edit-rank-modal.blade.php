@@ -11,7 +11,7 @@
                         @csrf
                         <input type="text" name="rankId" id="rankId" hidden>
                         <div class="mb-3">
-                            <label for="newRankName" class="form-label">NIP</label>
+                            <label for="newRankName" class="form-label">Nama Golongan</label>
                             <input type="text" class="form-control" id="newRankName" name="newRankName" >
                         </div>
                         <button type="submit" id="submitEditRank" class="btn btn-primary">Simpan</button>

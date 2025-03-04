@@ -35,12 +35,24 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::delete('/ranks/delete', 'App\Http\Controllers\Admin\RankController@destroy')->name('admin.rank.destroy');
 
     Route::get('/echelons', 'App\Http\Controllers\Admin\EchelonController@index')->name("admin.echelon.index");
+    Route::get('/echelons/data', 'App\Http\Controllers\Admin\EchelonController@getData')->name('admin.echelon.data');
+    Route::post('/echelons/store', 'App\Http\Controllers\Admin\EchelonController@store')->name('admin.echelon.store');
+    Route::post('/echelons/update', 'App\Http\Controllers\Admin\EchelonController@update')->name('admin.echelon.update');
+    Route::delete('/echelons/delete', 'App\Http\Controllers\Admin\EchelonController@destroy')->name('admin.echelon.destroy');
 
     Route::get('/positions', 'App\Http\Controllers\Admin\PositionController@index')->name("admin.position.index");
+    Route::get('/positions/data', 'App\Http\Controllers\Admin\PositionController@getData')->name('admin.position.data');
+    Route::post('/positions/store', 'App\Http\Controllers\Admin\PositionController@store')->name('admin.position.store');
+    Route::post('/positions/update', 'App\Http\Controllers\Admin\PositionController@update')->name('admin.position.update');
+    Route::delete('/positions/delete', 'App\Http\Controllers\Admin\PositionController@destroy')->name('admin.position.destroy');
 
     Route::get('/work-places', 'App\Http\Controllers\Admin\WorkPlaceController@index')->name("admin.work-place.index");
 
     Route::get('/religions', 'App\Http\Controllers\Admin\ReligionController@index')->name("admin.religion.index");
+    Route::get('/religions/data', 'App\Http\Controllers\Admin\ReligionController@getData')->name('admin.religion.data');
+    Route::post('/religions/store', 'App\Http\Controllers\Admin\ReligionController@store')->name('admin.religion.store');
+    Route::post('/religions/update', 'App\Http\Controllers\Admin\ReligionController@update')->name('admin.religion.update');
+    Route::delete('/religions/delete', 'App\Http\Controllers\Admin\ReligionController@destroy')->name('admin.religion.destroy');
 
     Route::get('/work-units', 'App\Http\Controllers\Admin\WorkUnitController@index')->name("admin.work-unit.index");
 });
