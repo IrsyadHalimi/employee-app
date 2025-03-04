@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Rank;
 use App\Models\Echelon;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
-    public function index() 
+    public function index()
     {
         $ranks = Rank::all();
         $echelons = Echelon::all();
@@ -31,7 +32,7 @@ class EmployeeController extends Controller
     public function getData(Request $request)
     {
         $employee = Employee::with('rank', 'echelon', 'position', 'workPlace', 'religion', 'workUnit');
-        
+
         if ($request->has('workUnit') && $request->workUnit != '') {
             $employee->where('work_unit_id', $request->workUnit);
         }
@@ -71,15 +72,15 @@ class EmployeeController extends Controller
                 'phone_number' => base64_encode($row->phone_number),
                 'npwp_number' => base64_encode($row->npwp_number),
             ];
-        
+
             $editButton = '<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#employeeEditModal" class="editButton"';
-        
+
             foreach ($encodedData as $key => $value) {
                 $editButton .= ' data-' . $key . '="' . $value . '"';
             }
-        
+
             $editButton .= '><i class="fa-solid fa-file-pen"></i></a>';
-            $deleteButton = ' <a href="javascript:void(0)" onClick="deleteEmployee('.$row->employee_id.')"><i class="fa-solid fa-trash"></i></a>';
+            $deleteButton = '<a href="javascript:void(0)" onClick="deleteEmployee(\'' . $row->employee_id . '\')"><i class="fa-solid fa-trash"></i></a>';
             return $editButton . $deleteButton;
         })
         ->rawColumns(['action'])
@@ -121,6 +122,8 @@ class EmployeeController extends Controller
             'work_unit_id' => $request->workUnitId ? $request->workUnitId : null,
             'phone_number' => $request->phoneNumber ? $request->phoneNumber : null,
             'npwp_number' => $request->npwpNumber ? $request->npwpNumber : null,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         return response()->json([
@@ -133,21 +136,21 @@ class EmployeeController extends Controller
     public function update(Request $request)
     {
         $rules = [
+            'employeeId' => 'required|exists:employees,employee_id',
             'name' => 'required|string|max:50',
             'birthPlace' => 'required|string|max:50',
             'address' => 'nullable|string|max:255',
             'birthDate' => 'required|date',
             'gender' => 'required|in:male,female',
-            'religionId' => 'required',
+            'religionId' => 'required|exists:religions,id',
             'rankId' => 'nullable|exists:ranks,id',
             'echelonId' => 'nullable|exists:echelons,id',
             'positionId' => 'nullable|exists:positions,id',
             'workPlaceId' => 'nullable|exists:work_places,id',
-            'religionId' => 'required|exists:religions,id',
             'workUnitId' => 'nullable|exists:work_units,id',
             'phoneNumber' => 'nullable|string|max:15',
             'npwpNumber' => 'nullable|string|max:20',
-        ];  
+        ];
 
         if ($request->employeeId !== $request->newEmployeeId) {
             $rules['newEmployeeId'] = 'required|unique:employees,employee_id|max:11';
@@ -156,26 +159,53 @@ class EmployeeController extends Controller
         $validatedData = $request->validate($rules);
 
         DB::transaction(function () use ($request, $validatedData) {
-            $employee = Employee::findOrFail($request->employeeId);
+            $employee = Employee::where('employee_id', $request->employeeId)->firstOrFail();
 
-            $data = $validatedData;
-            
+            // Jika employeeId berubah, update secara terpisah
             if ($request->employeeId !== $request->newEmployeeId) {
-                $data['employee_id'] = $request->newEmployeeId;
-            } else {
-                $data = collect($data)->except('newEmployeeId')->toArray();
+                $employee->update(['employee_id' => $request->newEmployeeId]);
             }
 
-            $employee->fill($data);
-            $employee->save();
+            // Update kolom lain satu per satu
+            $employee->update([
+                'name' => $request->name,
+                'birth_place' => $request->birthPlace,
+                'birth_date' => $request->birthDate,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'rank_id' => $request->rankId ?: null,
+                'echelon_id' => $request->echelonId ?: null,
+                'position_id' => $request->positionId ?: null,
+                'work_place_id' => $request->workPlaceId ?: null,
+                'religion_id' => $request->religionId,
+                'work_unit_id' => $request->workUnitId ?: null,
+                'phone_number' => $request->phoneNumber ?: null,
+                'npwp_number' => $request->npwpNumber ?: null,
+                'updated_at' => Carbon::now(),
+            ]);
         });
 
-        $updatedEmployee = Employee::find($request->newEmployeeId);
+        $updatedEmployee = Employee::where('employee_id', $request->newEmployeeId)->first();
 
         return response()->json([
             'success' => true,
-            'message' => 'Pegawai berhasil ditambahkan!',
+            'message' => 'Data pegawai berhasil diubah!',
             'data' => $updatedEmployee
+        ]);
+    }
+
+    public function destroy(Request $request)
+    {
+        $validatedData = $request->validate([
+            'employeeId' => 'required',
+        ]);
+
+        $deletedEmployee = Employee::destroy($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data pegawai berhasil dihapus!',
+            'data' => $deletedEmployee
         ]);
     }
 }

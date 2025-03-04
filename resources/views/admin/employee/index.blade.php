@@ -56,8 +56,10 @@
 @endsection
 @section('scripts')
 <script>
+    var table;
+
     $(document).ready(function () {
-        var table = $('#employeeTable').DataTable({
+        table = $('#employeeTable').DataTable({
             responsive: {
                 details: {
                     type: 'column',
@@ -73,14 +75,14 @@
                 }
             },
             columns: [
-                { 
+                {
                     className: 'dt-control',
-                    data: null, 
-                    orderable: false, 
-                    searchable: false, 
+                    data: null,
+                    orderable: false,
+                    searchable: false,
                     render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
-                    } 
+                    }
                 },
                 { data: 'employee_id', name: 'employee_id' },
                 { data: 'name', name: 'name' },
@@ -88,20 +90,20 @@
                 { data: 'address', name: 'address' },
                 { data: 'birth_date', name: 'birth_date' },
                 { data: 'gender', name: 'gender' },
-                { data: 'rank.rank_name', name: 'rank.rank_name' }, // Pastikan 'rank' sesuai dengan nama relasi di model
-                { data: 'echelon.echelon_name', name: 'echelon.echelon_name' }, // Pastikan 'echelon' sesuai dengan nama relasi di model
-                { data: 'position.position_description', name: 'position.position_description' }, // Pastikan 'position' sesuai dengan nama relasi di model
-                { data: 'workPlace.work_place_name', name: 'workPlace.work_place_name' }, // Pastikan 'workPlace' sesuai dengan nama relasi di model
+                { data: 'rank.rank_name', name: 'rank.rank_name' },
+                { data: 'echelon.echelon_name', name: 'echelon.echelon_name' },
+                { data: 'position.position_description', name: 'position.position_description' },
+                { data: 'workPlace.work_place_name', name: 'workPlace.work_place_name' },
                 { data: 'religion.religion_name', name: 'religion.religion_name' },
                 { data: 'action', name: 'action' },
-                { data: 'workUnit.work_unit_name', name: 'workUnit.work_unit_name' }, // Pastikan 'workUnit' sesuai dengan nama relasi di model
+                { data: 'workUnit.work_unit_name', name: 'workUnit.work_unit_name' },
                 { data: 'phone_number', name: 'phone_number' },
                 { data: 'npwp_number', name: 'npwp_number' },
             ]
         });
 
         $('#workUnitFilter').change(function () {
-            table.ajax.reload(); 
+            table.ajax.reload();
         });
 
         $('#employeeCreateForm').submit(function (e) {
@@ -212,7 +214,8 @@
                             $('#employeeCreateModal').modal('hide');
                             $('#employeeCreateForm')[0].reset();
                             table.ajax.reload();
-                        })
+                        });
+                        $('#employeeEditModal').modal('hide');
                     }
                 },
                 error: function (xhr) {
@@ -235,5 +238,64 @@
             });
         });
     });
+
+    function deleteEmployee(employeeId) {
+        if(employeeId != "") {
+            Swal.fire({
+            title: 'Anda yakin ingin menghapus?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+            allowOutsideClick: true,
+            allowEscapeKey: true,
+            allowEnterKey: true,
+            reverseButtons: false,
+            focusCancel: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                table.processing(true);
+                let token = document.getElementsByName('_token')[0].value.trim();
+                let url = '{{ route('admin.employee.destroy') }}';
+                $.ajax({
+                    url : url,
+                    type : 'DELETE',
+                    dataType : 'json',
+                    data : {
+                        _token : token,
+                        employeeId: employeeId
+                    },
+                    success : function(response) {
+                        table.ajax.reload();
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    },
+                    error : function(response) {
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: response.message,
+                            icon: 'error',
+                        });
+                    },
+                    complete: function() {
+                        table.processing(false);
+                        table.ajax.reload();
+                    }
+                });
+                table.processing(false);
+            }
+        });
+        } else {
+            Swal.fire({
+                title: 'Gagal!',
+                text: response.message,
+                icon: 'error',
+            });
+        }
+    }
 </script>
 @endsection
