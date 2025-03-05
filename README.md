@@ -76,7 +76,8 @@ php artisan migrate
 Untuk mengisi beberapa data dan user Admin default pada tabel, jalankan perintah berikut
 
 ```
-php artisan db:seed
+php artisan db:seed --class=AdminSeeder
+php artisan db:seed --class=DataSeeder
 ```
 
 ### 4. Jalankan Aplikasi
