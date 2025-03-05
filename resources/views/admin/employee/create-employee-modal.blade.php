@@ -79,21 +79,21 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="religionId" class="form-label">Agama</label>
-                            <select class="form-select" id="religionId" name="religionId" >
-                                <option value="">Pilih</option>
-                                @foreach($religions as $religion)
-                                    <option value="{{ $religion->id }}">{{ $religion->religion_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
                             <label for="workPlaceId" class="form-label">Tempat Tugas</label>
                             <select class="form-select" id="workPlaceId" name="workPlaceId" >
                                 <option value="">Pilih</option>
                                 @foreach($workPlaces as $workPlace)
                                     <option value="{{ $workPlace->id }}">{{ $workPlace->work_place_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="religionId" class="form-label">Agama</label>
+                            <select class="form-select" id="religionId" name="religionId" >
+                                <option value="">Pilih</option>
+                                @foreach($religions as $religion)
+                                    <option value="{{ $religion->id }}">{{ $religion->religion_name }}</option>
                                 @endforeach
                             </select>
                         </div>

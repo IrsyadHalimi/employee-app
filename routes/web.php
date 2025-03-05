@@ -27,6 +27,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::post('/employees/store', 'App\Http\Controllers\Admin\EmployeeController@store')->name('admin.employee.store');
     Route::post('/employees/update', 'App\Http\Controllers\Admin\EmployeeController@update')->name('admin.employee.update');
     Route::delete('/employees/delete', 'App\Http\Controllers\Admin\EmployeeController@destroy')->name('admin.employee.destroy');
+    Route::get('/employees/print-pdf', 'App\Http\Controllers\Admin\EmployeeController@printPdf')->name('admin.employee.print-pdf');
 
     Route::get('/ranks', 'App\Http\Controllers\Admin\RankController@index')->name("admin.rank.index");
     Route::get('/ranks/data', 'App\Http\Controllers\Admin\RankController@getData')->name('admin.rank.data');

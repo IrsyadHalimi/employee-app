@@ -10,6 +10,9 @@
                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#employeeCreateModal">
                         Tambah Pegawai
                     </button>
+                    <button type="button" class="printButton btn btn-warning mb-3">
+                        Cetak Data
+                    </button>
                     <div class="mb-3">
                         <label for="workUnitFilter" class="form-label">Pilih Unit Kerja</label>
                         <select id="workUnitFilter" class="form-select">
@@ -253,6 +256,11 @@
                     submitButton.prop('disabled', false).html('Simpan');
                 }
             });
+        });
+
+        $(document).on('click', '.printButton', function() {
+            let url = '{{ route('admin.employee.print-pdf') }}';
+            window.location.href = url;
         });
     });
 

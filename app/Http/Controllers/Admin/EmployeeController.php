@@ -15,6 +15,7 @@ use App\Models\WorkUnit;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class EmployeeController extends Controller
 {
@@ -227,5 +228,27 @@ class EmployeeController extends Controller
             'message' => 'Data pegawai berhasil dihapus!',
             'data' => $deletedEmployee
         ]);
+    }
+
+    public function printPdf()
+    {
+        $employees = Employee::with('rank', 'echelon', 'position', 'workPlace', 'religion', 'workUnit')->get();
+
+        $bootstrapPath = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css";
+
+        foreach ($employees as $employee) {
+            if ($employee->img) {
+                $imgPath = storage_path('app/public/profile/' . $employee->img);
+                if (file_exists($imgPath)) {
+                    $employee->imgBase64 = base64_encode(file_get_contents($imgPath));
+                } else {
+                    $employee->imgBase64 = null;
+                }
+            }
+        }
+
+        $pdf = PDF::loadView('admin.employee.print-pdf', compact('employees', 'bootstrapPath'))->setPaper('a4', 'portrait');
+
+        return $pdf->download('data-pegawai.pdf');
     }
 }
