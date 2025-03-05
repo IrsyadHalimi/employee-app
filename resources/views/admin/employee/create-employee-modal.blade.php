@@ -23,7 +23,7 @@
                             <label for="birthPlace" class="form-label">Tempat Lahir</label>
                             <input type="text" class="form-control" id="birthPlace" name="birthPlace" >
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="address" class="form-label">Alamat</label>
                             <input type="text" class="form-control" id="address" name="address" >
@@ -57,7 +57,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="echelonId" class="form-label">Eselon</label>
                             <select class="form-select" id="echelonId" name="echelonId" >
@@ -112,14 +112,14 @@
                             <label for="phoneNumber" class="form-label">No. HP</label>
                             <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" >
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="npwpNumber" class="form-label">NPWP</label>
                             <input type="number" class="form-control" id="npwpNumber" name="npwpNumber" >
                         </div>
 
                         <div class="mb-3">
-                            <label for="npwpNumber" class="form-label">Upload Foto</label>
+                            <label for="img" class="form-label">Upload Foto</label>
                             <input type="file" class="form-control" name="img" id="img" accept="image/*">
                         </div>
 

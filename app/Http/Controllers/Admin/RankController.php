@@ -25,8 +25,8 @@ class RankController extends Controller
             $rankId = base64_encode($row->id);
             $rankName = base64_encode($row->rank_name);
 
-            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#rankEditModal" data-rank_id="'. $rankId .'" data-rank_name="'. $rankName .'"  class="editButton"><i class="fa-solid fa-file-pen"></i></a>';
-            $deleteButton = '<a href="javascript:void(0)" title="Hapus" onClick="deleteRank(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
+            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#rankEditModal" data-rank_id="'. $rankId .'" data-rank_name="'. $rankName .'"  class="editButton mx-2"><i class="fa-solid fa-file-pen"></i></a>';
+            $deleteButton = '<a href="javascript:void(0)" title="Hapus" class="text-danger" onClick="deleteRank(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
             return $editButton . $deleteButton;
         })
         ->rawColumns(['action'])

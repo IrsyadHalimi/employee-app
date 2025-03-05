@@ -25,8 +25,8 @@ class WorkPlaceController extends Controller
             $workPlaceId = base64_encode($row->id);
             $workPlaceName = base64_encode($row->work_place_name);
 
-            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#workPlaceEditModal" data-work_place_id="'. $workPlaceId .'" data-work_place_name="'. $workPlaceName .'"  class="editButton"><i class="fa-solid fa-file-pen"></i></a>';
-            $deleteButton = '<a href="javascript:void(0)" title="Hapus" onClick="deleteWorkPlace(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
+            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#workPlaceEditModal" data-work_place_id="'. $workPlaceId .'" data-work_place_name="'. $workPlaceName .'"  class="editButton mx-2"><i class="fa-solid fa-file-pen"></i></a>';
+            $deleteButton = '<a href="javascript:void(0)" title="Hapus" class="text-danger" onClick="deleteWorkPlace(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
             return $editButton . $deleteButton;
         })
         ->rawColumns(['action'])

@@ -100,8 +100,8 @@
                 { data: 'workUnit.work_unit_name', name: 'workUnit.work_unit_name' },
                 { data: 'phone_number', name: 'phone_number' },
                 { data: 'npwp_number', name: 'npwp_number' },
-                { 
-                    data: 'img', 
+                {
+                    data: 'img',
                     name: 'img',
                     orderable: false,
                     searchable: false,
@@ -109,7 +109,7 @@
                         if (data) {
                             return `<img src="/storage/profile/${data}" class="img-thumbnail" width="100" height="100">`;
                         }
-                        return `<img src="/storage/profile/default.png" class="img-thumbnail" width="100" height="100">`;
+                        return `<img src="{{ asset('profile/default.jpg') }}" class="img-thumbnail" width="100" height="100">`;
                     }
                 },
             ]
@@ -208,7 +208,7 @@
         $('#employeeEditForm').submit(function (e) {
             e.preventDefault();
 
-            var formData = $(this).serialize();
+            var formData = new FormData(this);
             var submitButton = $('#submitEditEmployee');
 
             table.processing(true);
@@ -218,6 +218,8 @@
                 url: "{{ route('admin.employee.update') }}",
                 type: "POST",
                 data: formData,
+                processData: false,
+                contentType: false,
                 success: function (response) {
                     if (response.success) {
                         Swal.fire({

@@ -25,8 +25,8 @@ class WorkUnitController extends Controller
             $workUnitId = base64_encode($row->id);
             $workUnitName = base64_encode($row->work_unit_name);
 
-            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#workUnitEditModal" data-work_unit_id="'. $workUnitId .'" data-work_unit_name="'. $workUnitName .'"  class="editButton"><i class="fa-solid fa-file-pen"></i></a>';
-            $deleteButton = '<a href="javascript:void(0)" title="Hapus" onClick="deleteWorkUnit(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
+            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#workUnitEditModal" data-work_unit_id="'. $workUnitId .'" data-work_unit_name="'. $workUnitName .'"  class="editButton mx-2"><i class="fa-solid fa-file-pen"></i></a>';
+            $deleteButton = '<a href="javascript:void(0)" title="Hapus" class="text-danger" onClick="deleteWorkUnit(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
             return $editButton . $deleteButton;
         })
         ->rawColumns(['action'])

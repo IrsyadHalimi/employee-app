@@ -75,14 +75,14 @@ class EmployeeController extends Controller
                 'img' => base64_encode($row->img),
             ];
 
-            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#employeeEditModal" class="editButton"';
+            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#employeeEditModal" class="editButton mx-2"';
 
             foreach ($encodedData as $key => $value) {
                 $editButton .= ' data-' . $key . '="' . $value . '"';
             }
 
             $editButton .= '><i class="fa-solid fa-file-pen"></i></a>';
-            $deleteButton = '<a href="javascript:void(0)" title="Hapus" onClick="deleteEmployee(\'' . $row->employee_id . '\')"><i class="fa-solid fa-trash"></i></a>';
+            $deleteButton = '<a href="javascript:void(0)" title="Hapus" class="text-danger" onClick="deleteEmployee(\'' . $row->employee_id . '\')"><i class="fa-solid fa-trash"></i></a>';
             return $editButton . $deleteButton;
         })
         ->rawColumns(['action'])
@@ -111,13 +111,13 @@ class EmployeeController extends Controller
         ]);
 
         $imgName = null;
-        
+
         if ($request->hasFile('img')) {
             $img = $request->file('img');
             $imgName = time() . '.' . $img->getClientOriginalExtension();
             $img->storeAs('public/profile', $imgName);
         }
-        
+
         $employee = Employee::create([
             'employee_id' => $request->employeeId,
             'name' => $request->name,
@@ -162,7 +162,16 @@ class EmployeeController extends Controller
             'workUnitId' => 'nullable|exists:work_units,id',
             'phoneNumber' => 'nullable|string|max:15',
             'npwpNumber' => 'nullable|string|max:20',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
+
+        $imgName = null;
+
+        if ($request->hasFile('img')) {
+            $img = $request->file('img');
+            $imgName = time() . '.' . $img->getClientOriginalExtension();
+            $img->storeAs('public/profile', $imgName);
+        }
 
         if ($request->employeeId !== $request->newEmployeeId) {
             $rules['newEmployeeId'] = 'required|unique:employees,employee_id|max:11';
@@ -170,15 +179,13 @@ class EmployeeController extends Controller
 
         $validatedData = $request->validate($rules);
 
-        DB::transaction(function () use ($request, $validatedData) {
+        DB::transaction(function () use ($request, $validatedData, $imgName) {
             $employee = Employee::where('employee_id', $request->employeeId)->firstOrFail();
 
-            // Jika employeeId berubah, update secara terpisah
             if ($request->employeeId !== $request->newEmployeeId) {
                 $employee->update(['employee_id' => $request->newEmployeeId]);
             }
 
-            // Update kolom lain satu per satu
             $employee->update([
                 'name' => $request->name,
                 'birth_place' => $request->birthPlace,
@@ -193,6 +200,7 @@ class EmployeeController extends Controller
                 'work_unit_id' => $request->workUnitId ?: null,
                 'phone_number' => $request->phoneNumber ?: null,
                 'npwp_number' => $request->npwpNumber ?: null,
+                'img' => $imgName,
                 'updated_at' => Carbon::now(),
             ]);
         });

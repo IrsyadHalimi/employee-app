@@ -25,8 +25,8 @@ class ReligionController extends Controller
             $religionId = base64_encode($row->id);
             $religionName = base64_encode($row->religion_name);
 
-            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#religionEditModal" data-religion_id="'. $religionId .'" data-religion_name="'. $religionName .'"  class="editButton"><i class="fa-solid fa-file-pen"></i></a>';
-            $deleteButton = '<a href="javascript:void(0)" title="Hapus" onClick="deleteReligion(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
+            $editButton = '<a href="javascript:void(0)" title="Edit" data-bs-toggle="modal" data-bs-target="#religionEditModal" data-religion_id="'. $religionId .'" data-religion_name="'. $religionName .'"  class="editButton mx-2"><i class="fa-solid fa-file-pen"></i></a>';
+            $deleteButton = '<a href="javascript:void(0)" title="Hapus" class="text-danger" onClick="deleteReligion(\'' . $row->id . '\')"><i class="fa-solid fa-trash"></i></a>';
             return $editButton . $deleteButton;
         })
         ->rawColumns(['action'])
