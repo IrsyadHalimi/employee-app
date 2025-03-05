@@ -58,21 +58,24 @@
                         @else
                             @if (Auth::user()->role === 'admin')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">Dashboard Admin</a>
+                                    <a href="/admin/employees" class="nav-link">Pegawai</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">Manajemen Pengguna</a>
+                                    <a href="/admin/ranks" class="nav-link">Golongan</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">Pengaturan</a>
+                                    <a href="/admin/positions" class="nav-link">Jabatan</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/work-places" class="nav-link">Tempat Tugas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/religions" class="nav-link">Agama</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/work-units" class="nav-link">Unit Kerja</a>
                                 </li>
                             @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="">Dashboard Employee</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="">Profil</a>
-                                </li>
                             @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

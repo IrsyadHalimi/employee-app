@@ -7,7 +7,7 @@
     <thead>
         <tr>
             @foreach($options as $option)
-                <th>{{ $option }}</th>
+                <th class="text-center">{{ $option }}</th>
             @endforeach
         </tr>
     </thead>
