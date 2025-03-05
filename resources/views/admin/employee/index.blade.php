@@ -174,6 +174,7 @@
             var workUnitId = atob($(this).data('work_unit_id'));
             var phoneNumber = atob($(this).data('phone_number'));
             var npwpNumber = atob($(this).data('npwp_number'));
+            var img = atob($(this).data('img'));
 
             $('#employeeEditModal #employeeId').val(employeeId);
             $('#employeeEditModal #newEmployeeId').val(employeeId);
@@ -193,6 +194,12 @@
             $('#employeeEditModal #workUnitId').val(workUnitId);
             $('#employeeEditModal #phoneNumber').val(phoneNumber);
             $('#employeeEditModal #npwpNumber').val(npwpNumber);
+            if (img) {
+                $('#imgPreview').attr('src', img).show();
+                $('#old_img').val(img);
+            } else {
+                $('#imgPreview').hide();
+            }
 
             $('#employeeEditModal').modal('show');
         });
