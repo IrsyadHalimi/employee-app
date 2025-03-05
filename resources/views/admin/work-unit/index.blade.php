@@ -11,17 +11,7 @@
                         Tambah Tempat Tugas
                     </button>
                     <div class="table-responsive">
-                        <table id="workUnitTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Unit Kerja</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <x-tables.table-data name="workUnitTable" :options="['No', 'Nama Unit Kerja', 'Aksi']" />
                     </div>
                 </div>
             </div>

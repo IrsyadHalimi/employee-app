@@ -11,17 +11,7 @@
                         Tambah Jabatan
                     </button>
                     <div class="table-responsive">
-                        <table id="positionTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Jabatan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <x-tables.table-data name="positionTable" :options="['No', 'Nama Jabatan', 'Aksi']" />
                     </div>
                 </div>
             </div>

@@ -11,17 +11,7 @@
                         Tambah Golongan
                     </button>
                     <div class="table-responsive">
-                        <table id="rankTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Golongan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <x-tables.table-data name="rankTable" :options="['No', 'Nama Golongan', 'Aksi']" />
                     </div>
                 </div>
             </div>

@@ -11,17 +11,7 @@
                         Tambah Eselon
                     </button>
                     <div class="table-responsive">
-                        <table id="echelonTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Eselon</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <x-tables.table-data name="echelonTable" :options="['No', 'Nama Eselon', 'Aksi']" />
                     </div>
                 </div>
             </div>

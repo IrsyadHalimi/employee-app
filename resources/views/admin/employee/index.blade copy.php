@@ -15,29 +15,40 @@
                     </button>
                     <div class="mb-3">
                         <label for="workUnitFilter" class="form-label">Pilih Unit Kerja</label>
-                        <x-filters.select-filter name="workUnit" :options="$workUnits" label="Semua Unit Kerja" valueKey="id" textKey="work_unit_name"/>
+                        <select id="workUnitFilter" class="form-select">
+                            <option value="">Semua Unit Kerja</option>
+                            @foreach ($workUnits as $unit)
+                                <option value="{{ $unit->id }}">{{ $unit->work_unit_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="table-responsive">
-                        <x-tables.table-data name="employeeTable" :options="[
-                            'No',
-                            'NIP',
-                            'Nama',
-                            'Tempat Lahir',
-                            'Alamat',
-                            'Tanggal Lahir',
-                            'L/P',
-                            'Gol',
-                            'Eselon',
-                            'Jabatan',
-                            'Tempat Tugas',
-                            'Agama',
-                            'Aksi',
-                            'Unit Kerja',
-                            'No. HP',
-                            'NPWP',
-                            'Foto'
-                        ]" />
+                        <table id="employeeTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NIP</th>
+                                    <th>Nama</th>
+                                    <th>Tempat Lahir</th>
+                                    <th>Alamat</th>
+                                    <th>Tanggal Lahir</th>
+                                    <th>L/P</th>
+                                    <th>Gol</th>
+                                    <th>Eselon</th>
+                                    <th>Jabatan</th>
+                                    <th>Tempat Tugas</th>
+                                    <th>Agama</th>
+                                    <th>Aksi</th>
+                                    <th>Unit Kerja</th>
+                                    <th>No. HP</th>
+                                    <th>NPWP</th>
+                                    <th>Foto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

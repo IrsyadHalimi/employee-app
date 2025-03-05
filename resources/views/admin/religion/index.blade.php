@@ -11,17 +11,7 @@
                         Tambah Agama
                     </button>
                     <div class="table-responsive">
-                        <table id="religionTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Agama</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <x-tables.table-data name="religionTable" :options="['No', 'Nama Agama', 'Aksi']" />
                     </div>
                 </div>
             </div>
