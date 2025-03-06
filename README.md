@@ -4,6 +4,7 @@
 
 Aplikasi ini berfungsi untuk mengelola data pegawai, melakukan penyimpanan data ke dalam database, mengubah dan menampilkannya melalui antarmuka web. Fitur yang tersedia meliputi:
 
+-   Autentikasi (Login)
 -   Menampilkan data pegawai
 -   Menampilkan data pegawai berdasarkan unit kerja tertentu
 -   Menambahkan data pegawai
